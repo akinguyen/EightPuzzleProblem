@@ -9,8 +9,6 @@ class Solution {
     );
     this.frontier = [this.board];
     this.initialState = this.board.hash;
-    this.cost_so_far = {};
-    this.cost_so_far[this.initialState] = 0;
     this.explored = new Set([]);
     this.pathTo = {};
     this.decodeBoard = {};
