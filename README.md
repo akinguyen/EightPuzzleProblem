@@ -1,9 +1,9 @@
 # EightPuzzleProblem
 
-This respository contains the Javascript solution for the Eight Puzzle Problem. The current solution utilizes the BFS and DFS concepts and will be updated with A* algorithm. 
+This respository contains the Javascript solution for the Eight Puzzle Problem. The current solution utilizes the BFS, DFS, Greedy Search and A* algorithm (Manhattan cost). 
 
 * 0 is the slider or non-number block
-* See the result by simply running `node main.js`
+* See the result by simply running `npm install js-priority-queue and node main.js`
 * Modify `var sol = new Solution([1, 2, 3, 4, 5, 0, 6, 7, 8])` into `var solution = new Solution(positions_array)` to solve custom initial state 
 
 Note: [1, 0, 2, 3, 4, 5, 6, 7, 8] will be presented in the format:
@@ -19,7 +19,7 @@ Note: [1, 0, 2, 3, 4, 5, 6, 7, 8] will be presented in the format:
 ### Running example for case [1, 0, 2, 3, 4, 5, 6, 7, 8]
 `var sol = new Solution([1, 0, 2, 3, 4, 5, 6, 7, 8]);`
 <br>
-`sol.mainBFS();`
+`sol.mainBFS(); // Call sol.mainDFS, sol.mainAStar, sol.mainGreedySearch for other solving options` 
 <br>
 `sol.printSolutionPath();`
 
