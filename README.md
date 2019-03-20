@@ -1,6 +1,6 @@
 # EightPuzzleProblem
 
-This respository contains the Javascript solution for the Eight Puzzle Problem. The current solution utilizes the BFS and DFS concepts and will be updated with A* algorithm. 
+This respository contains the Javascript solution for the Eight Puzzle Problem. The current solution utilizes the BFS, DFS, Greedy Search and A* algorithm (Manhattan cost). 
 
 * 0 is the slider or non-number block
 * See the result by simply running `node main.js`
