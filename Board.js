@@ -4,6 +4,16 @@ class Board {
     this.moveLedTo = moveLedTo;
     this.positions = positions;
     this.hash = this.hashCode();
+    this.manhattan = this.manhattanCost();
+  }
+  manhattanCost() {
+    let cost = 0;
+    for (let i = 0; i < 9; i++) {
+      cost +=
+        Math.abs(this.getCol(this.positions[i]) - this.getCol(i)) +
+        Math.abs(this.getRow(this.positions[i]) - this.getRow(i));
+    }
+    return cost;
   }
 
   // Print out the solution

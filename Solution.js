@@ -1,4 +1,5 @@
 var Board = require("./Board");
+var PriorityQueue = require("./node_modules/js-priority-queue/priority-queue");
 class Solution {
   constructor(initialPositions) {
     this.board = new Board(
@@ -8,6 +9,8 @@ class Solution {
     );
     this.frontier = [this.board];
     this.initialState = this.board.hash;
+    this.cost_so_far = {};
+    this.cost_so_far[this.initialState] = 0;
     this.explored = new Set([]);
     this.pathTo = {};
     this.decodeBoard = {};
@@ -72,6 +75,38 @@ class Solution {
           this.decodeMove[move.hash] = move.moveLedTo;
           this.pathTo[move.hash] = state.hash;
           this.frontier.push(move);
+          this.explored.add(move.hash);
+        }
+      }
+    }
+  }
+
+  mainGreedySearch() {
+    let frontier = new PriorityQueue({
+      comparator: function(a, b) {
+        return a.manhattan - b.manhattan;
+      }
+    });
+
+    frontier.queue(this.board);
+    let state;
+
+    while (frontier.length !== 0) {
+      state = frontier.dequeue();
+      let nextMoves = state.nextMoves();
+      this.explored.add(state.hash);
+
+      if (this.isSolution(state)) {
+        state.show();
+        return state;
+      }
+
+      for (let move of nextMoves) {
+        if (!this.explored.has(move.hash)) {
+          this.decodeBoard[move.hash] = move;
+          this.decodeMove[move.hash] = move.moveLedTo;
+          this.pathTo[move.hash] = state.hash;
+          frontier.queue(move);
           this.explored.add(move.hash);
         }
       }
