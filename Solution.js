@@ -7,7 +7,6 @@ class Solution {
       this.findSlidePos(initialPositions),
       initialPositions
     );
-    this.frontier = [this.board];
     this.initialState = this.board.hash;
     this.explored = new Set([]);
     this.pathTo = {};
@@ -32,9 +31,10 @@ class Solution {
 
   //DFS iterative approach
   mainDFS() {
+    let frontier = [this.board];
     let state;
-    while (this.frontier.length !== 0) {
-      state = this.frontier.pop();
+    while (frontier.length !== 0) {
+      state = frontier.pop();
       let nextMoves = state.nextMoves();
       this.explored.add(state.hash);
 
@@ -47,7 +47,7 @@ class Solution {
           this.decodeBoard[move.hash] = move;
           this.decodeMove[move.hash] = move.moveLedTo;
           this.pathTo[move.hash] = state.hash;
-          this.frontier.push(move);
+          frontier.push(move);
           this.explored.add(move.hash);
         }
       }
@@ -56,9 +56,10 @@ class Solution {
 
   //BFS iterative version
   mainBFS() {
+    let frontier = [this.board];
     let state;
-    while (this.frontier.length !== 0) {
-      state = this.frontier.splice(0, 1)[0];
+    while (frontier.length !== 0) {
+      state = frontier.splice(0, 1)[0];
       let nextMoves = state.nextMoves();
       this.explored.add(state.hash);
 
@@ -72,14 +73,16 @@ class Solution {
           this.decodeBoard[move.hash] = move;
           this.decodeMove[move.hash] = move.moveLedTo;
           this.pathTo[move.hash] = state.hash;
-          this.frontier.push(move);
+          frontier.push(move);
           this.explored.add(move.hash);
         }
       }
     }
   }
 
+  // Greedy Search
   mainGreedySearch() {
+    // Prioritize based on the cost from n to goal
     let frontier = new PriorityQueue({
       comparator: function(a, b) {
         return a.manhattan - b.manhattan;
@@ -111,10 +114,47 @@ class Solution {
     }
   }
 
+  // A* Search
   mainAStar() {
+    // Prioritize based on the cost from n to source and n to goal
     let frontier = new PriorityQueue({
       comparator: function(a, b) {
         return a.getTotalCost() - b.getTotalCost();
+      }
+    });
+
+    frontier.queue(this.board);
+    let state;
+
+    while (frontier.length !== 0) {
+      state = frontier.dequeue();
+      let nextMoves = state.nextMoves();
+      this.explored.add(state.hash);
+
+      if (this.isSolution(state)) {
+        state.show();
+        return state;
+      }
+
+      for (let move of nextMoves) {
+        if (!this.explored.has(move.hash)) {
+          move.moveCount += state.moveCount + 1;
+          this.decodeBoard[move.hash] = move;
+          this.decodeMove[move.hash] = move.moveLedTo;
+          this.pathTo[move.hash] = state.hash;
+          frontier.queue(move);
+          this.explored.add(move.hash);
+        }
+      }
+    }
+  }
+
+  // Dijskstra Search
+  mainDS() {
+    // Prioritize based on the cost from source to goal
+    let frontier = new PriorityQueue({
+      comparator: function(a, b) {
+        return a.moveCount - b.moveCount;
       }
     });
 

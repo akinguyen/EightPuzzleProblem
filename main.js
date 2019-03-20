@@ -4,7 +4,7 @@ var start = new Date().getTime();
 
 // Compute the hardest 8-puzzle
 var sol = new Solution([8, 6, 7, 2, 5, 4, 3, 0, 1]);
-sol.mainAStar();
+sol.mainDS();
 sol.printSolutionPath();
 //console.log(sol.getSolutionPath().reverse());
 
