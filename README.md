@@ -19,7 +19,7 @@ Note: [1, 0, 2, 3, 4, 5, 6, 7, 8] will be presented in the format:
 ### Running example for case [1, 0, 2, 3, 4, 5, 6, 7, 8]
 `var sol = new Solution([1, 0, 2, 3, 4, 5, 6, 7, 8]);`
 <br>
-`sol.mainBFS();`
+`sol.mainBFS(); // Call sol.mainDFS, sol.mainAStar, sol.mainGreedySearch for other solving options` 
 <br>
 `sol.printSolutionPath();`
 
