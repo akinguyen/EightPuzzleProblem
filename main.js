@@ -2,8 +2,8 @@ var Solution = require("./Solution");
 
 var start = new Date().getTime();
 
-// Compute the solution
-var sol = new Solution([4, 6, 1, 0, 8, 2, 7, 5, 3]);
+// Compute the hardest 8-puzzle
+var sol = new Solution([8, 6, 7, 2, 5, 4, 3, 0, 1]);
 sol.mainAStar();
 sol.printSolutionPath();
 //console.log(sol.getSolutionPath().reverse());
