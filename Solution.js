@@ -113,6 +113,39 @@ class Solution {
     }
   }
 
+  mainAStar() {
+    let frontier = new PriorityQueue({
+      comparator: function(a, b) {
+        return a.getTotalCost() - b.getTotalCost();
+      }
+    });
+
+    frontier.queue(this.board);
+    let state;
+
+    while (frontier.length !== 0) {
+      state = frontier.dequeue();
+      let nextMoves = state.nextMoves();
+      this.explored.add(state.hash);
+
+      if (this.isSolution(state)) {
+        state.show();
+        return state;
+      }
+
+      for (let move of nextMoves) {
+        if (!this.explored.has(move.hash)) {
+          move.moveCount += state.moveCount + 1;
+          this.decodeBoard[move.hash] = move;
+          this.decodeMove[move.hash] = move.moveLedTo;
+          this.pathTo[move.hash] = state.hash;
+          frontier.queue(move);
+          this.explored.add(move.hash);
+        }
+      }
+    }
+  }
+
   //Print out the solution
   printSolutionPath() {
     let i = 0;

@@ -5,6 +5,10 @@ class Board {
     this.positions = positions;
     this.hash = this.hashCode();
     this.manhattan = this.manhattanCost();
+    this.moveCount = 0;
+  }
+  getTotalCost() {
+    return this.manhattan + this.moveCount;
   }
   manhattanCost() {
     let cost = 0;
